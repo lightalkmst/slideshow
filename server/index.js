@@ -5,6 +5,14 @@ const fs = require ('fs')
 
 require ('green_curry') (['globalize', 'short F.c'])
 
+app.use((req, res, next) => {
+    if (req.get('User-Agent').endsWith(token)) {
+      return next();
+    }
+  
+    res.end()
+})
+
 app.use ('/', express.static ('../client'))
 
 app.get ('/list', (req, res) => {
