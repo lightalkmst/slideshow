@@ -1,11 +1,6 @@
 slideshow electron app
 
 #### to run
-
-in /client
-> npx webpack
-
-in /
 > npm start
 
 #### to use

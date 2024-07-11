@@ -2,6 +2,7 @@ import * as most from 'most'
 
 import list_input from './components/list_input.jsx'
 import time_input from './components/time_input.jsx'
+import random_checkbox from './components/random_checkbox.jsx'
 import slideshow from './components/slideshow.jsx'
 
 export default sources => {
@@ -19,11 +20,21 @@ export default sources => {
   } = time_input (sources)
 
   const {
+    DOM: random_dom$,
+    checkbox$: random_checkbox$,
+  } = random_checkbox ({
+    name: 'random',
+    init: false,
+    label: 'random',
+  }) (sources)
+
+  const {
     DOM: slideshow_dom$,
   } = slideshow ({
     ... sources,
     list_input$,
     time_input$,
+    random_checkbox$,
   })
 
   return {
@@ -31,6 +42,7 @@ export default sources => {
       most.combineArray ((
           list_dom,
           time_dom,
+          random_dom,
           slideshow_dom,
       ) => 
           <div>
@@ -41,12 +53,16 @@ export default sources => {
                 {time_dom}
               </div>
               <div>
+                {random_dom}
+              </div>
+              <div>
                 {slideshow_dom}
               </div>
           </div>
       , [
           list_dom$,
           time_dom$,
+          random_dom$,
           slideshow_dom$,
       ])
     ,

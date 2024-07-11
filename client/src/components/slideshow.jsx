@@ -6,6 +6,7 @@ export default sources => {
         HTTP,
         list_input$,
         time_input$,
+        random_checkbox$,
     } = sources
 
     const timer$ = time_input$.map (most.periodic).switch ()
@@ -23,10 +24,11 @@ export default sources => {
             .map (JSON.parse)
 
     const file$ =
-        most.combineArray ((path, files, i) => `${path}/${files [i % files.length]}`, [
+        most.combineArray ((path, files, i, random) => `${path}/${files [random ? Math.floor (Math.random () * files.length) : i % files.length]}`, [
             list_input$,
             fetch$,
             index$,
+            random_checkbox$,
         ])
 
     return {
